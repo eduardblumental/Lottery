@@ -2,14 +2,26 @@ package lv.helloit.eduards.lottery.admin;
 
 
 import lombok.extern.slf4j.XSlf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@XSlf4j
 public class AdminController {
 
-    @GetMapping
+    public static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+
+    @GetMapping(value = "/login")
+    public String adminLogin() {
+        LOGGER.info("Someone logged in as Admin");
+        return "admin-user";
+    }
+
+
+
+
+
 
 
 
