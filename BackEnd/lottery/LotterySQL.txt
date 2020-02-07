@@ -1,0 +1,32 @@
+drop schema if exists lotteries cascade;
+
+create schema lotteries;
+
+create table lotteries.admin_table
+(
+    admin_id serial not null constraint admin_table_pk primary key,
+    admin_login varchar(60) not null,
+    admin_password varchar(60) not null
+);
+
+insert into lotteries.admin_table (admin_id, admin_login, admin_password)
+VALUES ('1','admin1234','admin1234');
+
+create table lotteries.lottery_table
+(
+    lottery_id serial not null constraint lottery_table_pk primary key,
+    lottery_name varchar(60) not null unique,
+    lottery_start_date date not null,
+    lottery_end_date date not null,
+    lottery_status varchar(12),
+    lottery_number_of_participants int
+);
+
+create table lotteries.registration_table
+(
+    registration_id serial not null constraint registration_table_pk primary key,
+    lottery_id int not null,
+    registration_email varchar(60) not null unique,
+    registration_age int not null,
+    registration_code bigint not null
+);
