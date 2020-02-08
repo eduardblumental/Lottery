@@ -20,6 +20,7 @@ public class AdminController {
 
     @PostMapping(value = "/create-new-admin")
     public Admin admin (@RequestBody Admin admin) {
+        LOGGER.info("New Admin created");
         return adminService.createNewAdmin(admin);
     }
 

@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class Admin {
 
     @Id
-    @Column
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
