@@ -1,7 +1,11 @@
 package lv.helloit.eduards.lottery.admin;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AdminDao extends CrudRepository<Admin, String> {
+@Repository
+public interface AdminDao extends CrudRepository<Admin, Long> {
+
+
 
 }

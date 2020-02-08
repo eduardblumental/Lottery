@@ -1,7 +1,9 @@
 package lv.helloit.eduards.lottery.lottery;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface LotteryDAO extends CrudRepository<Lottery, String> {
+@Repository
+public interface LotteryDAO extends CrudRepository<Lottery, Long> {
 
 }

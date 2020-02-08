@@ -1,6 +1,8 @@
 package lv.helloit.eduards.lottery.registration;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RegistrationDAO extends CrudRepository<Registration, String> {
+@Repository
+public interface RegistrationDAO extends CrudRepository<Registration, Long> {
 }
