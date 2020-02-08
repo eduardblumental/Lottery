@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 
@@ -57,16 +59,16 @@
 <section>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-6 text-center">
+            <c:forEach items="${lotteries}" var="lottery">
+            <div class="text-center">
                 <div class="lms-lottery-field">
-                    <h1>ID:</h1>
-                    <h1>Name:</h1>
-                    <h2>Nuber of participants:</h2>
-                    <button type="button" class="btn btn-primary lms-lottery-button">See status</button>
-                    <button type="button" class="btn btn-primary lms-lottery-button">Stop registration</button>
-                    <button type="button" class="btn btn-primary lms-lottery-button">Choose winner</button>
+                    <h1>ID: ${lottery.id}</h1>
+                    <h1>Name: ${lottery.name}</h1>
+                    <h2>Number of participants: ${lottery.numberOfParticipants}</h2>
+                    <button type="button" class="btn btn-primary lms-lottery-button">View lottery</button>
                 </div>
             </div>
+            </c:forEach>
         </div>
     </div>
 </section>

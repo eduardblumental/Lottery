@@ -11,32 +11,32 @@ public class LotteryController {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LotteryController.class);
 
-    @PostMapping
+    @PostMapping(value = "/new-lottery")
     public String newLottery () {
         LOGGER.info("New lottery created");
         //todo return
         return null;
     }
 
-    @PostMapping
+    @PostMapping(value = "/start-registration")
     public String startRegistration () {
         LOGGER.info("Registration opened");
         return null;
     }
 
-    @PostMapping
+    @PostMapping(value = "/stop-registration")
     public String stopRegistration () {
         LOGGER.info("Registration closed");
         return null;
     }
 
-    @PostMapping
+    @PostMapping(value = "/choose-winner")
     public String chooseWinner () {
         LOGGER.info("Winner chosen");
         return null;
     }
 
-    @GetMapping
+    @GetMapping(value = "/stats")
     public String showStatistics () {
         LOGGER.info("Statistics");
         return null;
