@@ -28,7 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="lms-nav-item nav-item">
-                    <a class="nav-link" href="start-registration">Create new lottery</a>
+                    <a class="nav-link" href="/stats">Create new lottery</a>
                 </li>
                 <li class="lms-nav-item nav-item">
                     <a class="nav-link" href="/stats">Display statistics</a>
@@ -82,3 +82,9 @@
 </body>
 
 </html>
+
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>

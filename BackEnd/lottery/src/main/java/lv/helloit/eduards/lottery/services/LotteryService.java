@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import lv.helloit.eduards.lottery.Other.LotteryDAO;
 import lv.helloit.eduards.lottery.Other.LotteryStatus;
 import lv.helloit.eduards.lottery.Other.ResponseStatus;
+import lv.helloit.eduards.lottery.exceptions.LotteryAlreadyExistsException;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,22 +30,15 @@ public class LotteryService {
         lottery.setStatus(LotteryStatus.REGISTRATION_OPEN);
         lottery.setStartDate(LocalDateTime.now());
 
+        String title = lottery.getTitle();
+
         JSONObject response = new JSONObject();
 
         try {
-            if(lotteryDAO.save(lottery) != null) {
-                //Saved
-                response.put("status", ResponseStatus.OK);
-                response.put("id", lottery.getId());
-            } else {
-                //Not saved
-
-            }
-        } catch (IllegalArgumentException | JSONException err) {
-            //Not saved
-        }
-
-        return response.toString();
+            response.put("status:", ResponseStatus.OK);
+            response.put("limit:", lottery.getId());
+        } catch (LotteryAlreadyExistsException e) {
+            throw e;
     }
 
 }
