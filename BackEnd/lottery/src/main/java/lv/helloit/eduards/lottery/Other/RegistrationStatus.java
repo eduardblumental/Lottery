@@ -1,4 +1,4 @@
-package lv.helloit.eduards.lottery.registration;
+package lv.helloit.eduards.lottery.Other;
 
 public enum RegistrationStatus {
     WIN,

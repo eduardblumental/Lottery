@@ -1,4 +1,4 @@
-package lv.helloit.eduards.lottery.admin;
+package lv.helloit.eduards.lottery.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

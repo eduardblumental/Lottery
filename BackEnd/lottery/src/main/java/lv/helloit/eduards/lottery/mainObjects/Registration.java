@@ -1,5 +1,4 @@
-package lv.helloit.eduards.lottery.lottery;
-
+package lv.helloit.eduards.lottery.mainObjects;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,25 +12,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Lottery {
+public class Registration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
-    private String lotteryName;
+    private String email;
 
     @Column
-    private String startDate;
+    private Integer age;
 
     @Column
-    private String endDate;
-
-    @Column
-    private String status;
-
-    @Column
-    private Long numberOfParticipants;
+    private Long code;
 
 }

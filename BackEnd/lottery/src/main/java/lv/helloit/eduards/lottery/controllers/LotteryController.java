@@ -1,10 +1,13 @@
-package lv.helloit.eduards.lottery.lottery;
+package lv.helloit.eduards.lottery.controllers;
 
+import lv.helloit.eduards.lottery.mainObjects.Lottery;
+import lv.helloit.eduards.lottery.services.LotteryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,11 +15,13 @@ public class LotteryController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LotteryController.class);
 
-    @PostMapping(value = "/new-lottery")
-    public String newLottery () {
-        LOGGER.info("New lottery created");
-        //todo return
-        return null;
+    @Autowired
+    private LotteryService lotteryService;
+
+    @PostMapping(value = "/create-new-lottery")
+    public String newLottery (@RequestBody Lottery lottery) {
+            LOGGER.info("New lottery created");
+            return lotteryService.createNewLottery(lottery);
     }
 
     @PostMapping(value = "/start-registration")
