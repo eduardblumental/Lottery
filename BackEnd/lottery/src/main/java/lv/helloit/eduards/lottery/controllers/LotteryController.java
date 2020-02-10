@@ -2,8 +2,6 @@ package lv.helloit.eduards.lottery.controllers;
 
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.services.LotteryService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 public class LotteryController {
@@ -35,16 +33,11 @@ public class LotteryController {
         return lotteryService.endRegistration(lottery);
     }
 
-    @PostMapping(value = "/choose-winner")
-    public String chooseWinner () {
-        LOGGER.info("Winner chosen");
-        return null;
-    }
 
     @GetMapping(value = "/stats")
-    public String showStatistics () {
-        LOGGER.info("Statistics");
-        return null;
+    public List<Lottery> showStatistics () {
+        LOGGER.info("Statistics requested");
+        return lotteryService.stats();
     }
 
 }

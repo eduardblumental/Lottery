@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -28,12 +30,23 @@ public class LotteryService {
         return lottery;
     }
 
-    public Lottery endRegistration(Lottery lottery) {
-        Optional<Lottery> optionalLottery = lotteryDAO.findById(lottery.getId());
-        Lottery lot = optionalLottery.get();
-        lot.setStatus(LotteryStatus.REGISTRATION_CLOSED);
-        lotteryDAO.save(lot);
-        return lot;
+    public Lottery endRegistration(Lottery l) {
+        Optional<Lottery> optionalLottery = lotteryDAO.findById(l.getId());
+        Lottery lottery = optionalLottery.get();
+        lottery.setEndDate(LocalDateTime.now());
+        lottery.setStatus(LotteryStatus.REGISTRATION_CLOSED);
+        lotteryDAO.save(lottery);
+        return lottery;
+    }
+
+    public List<Lottery> stats() {
+        List<Lottery> list = new ArrayList<>();
+
+        for (Lottery lottery : lotteryDAO.findAll()){
+            list.add(lottery);
+        }
+
+        return list;
     }
 
 }
