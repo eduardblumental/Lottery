@@ -40,5 +40,8 @@ public class Lottery {
     @Column(name = "\"limit\"")
     private Long limit;
 
+    @Column
+    private Long winner;
+
 }
 

@@ -19,6 +19,9 @@ public class Registration {
     private Long id;
 
     @Column
+    private Long lotteryId;
+
+    @Column
     private String email;
 
     @Column
