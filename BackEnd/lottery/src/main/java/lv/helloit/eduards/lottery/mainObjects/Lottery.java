@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lv.helloit.eduards.lottery.Other.LotteryStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -22,7 +23,8 @@ public class Lottery {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @NotNull
+    @Column(unique=true)
     private String title;
 
     @Column
@@ -34,6 +36,7 @@ public class Lottery {
     @Column
     private LotteryStatus status;
 
+    @NotNull
     @Column(name = "\"limit\"")
     private Long limit;
 

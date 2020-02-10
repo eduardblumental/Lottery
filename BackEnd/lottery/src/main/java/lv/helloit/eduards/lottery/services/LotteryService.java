@@ -1,13 +1,8 @@
 package lv.helloit.eduards.lottery.services;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lv.helloit.eduards.lottery.Other.LotteryDAO;
 import lv.helloit.eduards.lottery.Other.LotteryStatus;
-import lv.helloit.eduards.lottery.Other.ResponseStatus;
-import lv.helloit.eduards.lottery.exceptions.LotteryAlreadyExistsException;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,19 +21,19 @@ public class LotteryService {
         this.lotteryDAO = lotteryDAO;
     }
 
-    public String createNewLottery(Lottery lottery) {
+    public Lottery createNewLottery(Lottery lottery) {
         lottery.setStatus(LotteryStatus.REGISTRATION_OPEN);
         lottery.setStartDate(LocalDateTime.now());
+        lotteryDAO.save(lottery);
+        return lottery;
+    }
 
-        String title = lottery.getTitle();
-
-        JSONObject response = new JSONObject();
-
-        try {
-            response.put("status:", ResponseStatus.OK);
-            response.put("limit:", lottery.getId());
-        } catch (LotteryAlreadyExistsException e) {
-            throw e;
+    public Lottery endRegistration(Lottery lottery) {
+        Optional<Lottery> optionalLottery = lotteryDAO.findById(lottery.getId());
+        Lottery lot = optionalLottery.get();
+        lot.setStatus(LotteryStatus.REGISTRATION_CLOSED);
+        lotteryDAO.save(lot);
+        return lot;
     }
 
 }
