@@ -23,9 +23,9 @@ public class LotteryService {
     private final LotteryDAO lotteryDAO;
     private final RegistrationDAO registrationDAO;
 
-    public LotteryService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO, RegistrationDAO registrationDAO1) {
+    public LotteryService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO) {
         this.lotteryDAO = lotteryDAO;
-        this.registrationDAO = registrationDAO1;
+        this.registrationDAO = registrationDAO;
     }
 
     public Lottery createNewLottery(Lottery lottery) {
@@ -54,15 +54,18 @@ public class LotteryService {
         return list;
     }
 
-    public Lottery chooseWinner(Lottery lottery) {
-        Long lotteryId = lottery.getId();
-
+    public Lottery chooseWinner(Lottery l) {
+        Long lotteryId = l.getId();
+        Optional<Lottery> optionalLottery = lotteryDAO.findById(lotteryId);
+        Lottery lottery = optionalLottery.get();
         List<Registration> list = registrationDAO.findAllByLotteryId(lotteryId);
 
         Random random = new Random();
         Registration winner = list.get(random.nextInt(list.size()));
 
         lottery.setWinner(winner.getCode());
+        lottery.setStatus(LotteryStatus.WINNER_CHOSEN);
+        lotteryDAO.save(lottery);
         return lottery;
     }
 

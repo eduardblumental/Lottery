@@ -22,7 +22,6 @@ public class LotteryController {
 
     @PostMapping(value = "/start-registration")
     public Lottery startRegistration (@RequestBody Lottery lottery) {
-        lotteryService.createNewLottery(lottery);
         LOGGER.info("Registration started");
         return lotteryService.createNewLottery(lottery);
     }
@@ -33,11 +32,11 @@ public class LotteryController {
         return lotteryService.endRegistration(lottery);
     }
 
-//    @PostMapping(value = "/choose-winner")
-//    public Lottery chooseWinner (@RequestBody Lottery lottery) {
-//        LOGGER.info("Winner chosen");
-//        return lotteryService.chooseWinner(lottery);
-//    }
+    @PostMapping(value = "/choose-winner")
+    public Lottery chooseWinner (@RequestBody Lottery lottery) {
+        LOGGER.info("Winner chosen");
+        return lotteryService.chooseWinner(lottery);
+    }
 
     @GetMapping(value = "/stats")
     public List<Lottery> showStatistics () {
