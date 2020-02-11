@@ -1,8 +1,11 @@
 package lv.helloit.eduards.lottery.services;
 
-import lv.helloit.eduards.lottery.Other.LotteryDAO;
-import lv.helloit.eduards.lottery.Other.LotteryStatus;
-import lv.helloit.eduards.lottery.Other.RegistrationDAO;
+import lv.helloit.eduards.lottery.DTOs.ChooseWinnerDTO;
+import lv.helloit.eduards.lottery.DTOs.LotteryActionDTO;
+import lv.helloit.eduards.lottery.DAOs.LotteryDAO;
+import lv.helloit.eduards.lottery.enums.LotteryStatus;
+import lv.helloit.eduards.lottery.DAOs.RegistrationDAO;
+import lv.helloit.eduards.lottery.enums.ResponseStatus;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.mainObjects.Registration;
 import org.slf4j.Logger;
@@ -28,20 +31,30 @@ public class LotteryService {
         this.registrationDAO = registrationDAO;
     }
 
-    public Lottery createNewLottery(Lottery lottery) {
+    public LotteryActionDTO createNewLottery(Lottery lottery) {
         lottery.setStatus(LotteryStatus.REGISTRATION_OPEN);
         lottery.setStartDate(LocalDateTime.now());
         lotteryDAO.save(lottery);
-        return lottery;
+
+        LotteryActionDTO lotteryActionDTO = new LotteryActionDTO();
+        lotteryActionDTO.setId(lottery.getId());
+        lotteryActionDTO.setStatus(ResponseStatus.OK);
+
+        return lotteryActionDTO;
     }
 
-    public Lottery endRegistration(Lottery l) {
+    public LotteryActionDTO endRegistration(Lottery l) {
         Optional<Lottery> optionalLottery = lotteryDAO.findById(l.getId());
         Lottery lottery = optionalLottery.get();
         lottery.setEndDate(LocalDateTime.now());
         lottery.setStatus(LotteryStatus.REGISTRATION_CLOSED);
         lotteryDAO.save(lottery);
-        return lottery;
+
+        LotteryActionDTO lotteryActionDTO = new LotteryActionDTO();
+        lotteryActionDTO.setId(lottery.getId());
+        lotteryActionDTO.setStatus(ResponseStatus.OK);
+
+        return lotteryActionDTO;
     }
 
     public List<Lottery> stats() {
@@ -54,7 +67,7 @@ public class LotteryService {
         return list;
     }
 
-    public Lottery chooseWinner(Lottery l) {
+    public ChooseWinnerDTO chooseWinner(Lottery l) {
         Long lotteryId = l.getId();
         Optional<Lottery> optionalLottery = lotteryDAO.findById(lotteryId);
         Lottery lottery = optionalLottery.get();
@@ -66,7 +79,12 @@ public class LotteryService {
         lottery.setWinner(winner.getCode());
         lottery.setStatus(LotteryStatus.WINNER_CHOSEN);
         lotteryDAO.save(lottery);
-        return lottery;
+
+        ChooseWinnerDTO chooseWinnerDTO = new ChooseWinnerDTO();
+        chooseWinnerDTO.setStatus(ResponseStatus.OK);
+        chooseWinnerDTO.setWinnerCode(lottery.getWinner());
+
+        return chooseWinnerDTO;
     }
 
 }

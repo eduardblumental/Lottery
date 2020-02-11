@@ -1,6 +1,7 @@
 package lv.helloit.eduards.lottery.controllers;
 
-import lv.helloit.eduards.lottery.Other.RegistrationStatus;
+import lv.helloit.eduards.lottery.DTOs.NewRegistrationDTO;
+import lv.helloit.eduards.lottery.DTOs.RegistrationStatusDTO;
 import lv.helloit.eduards.lottery.mainObjects.Registration;
 import lv.helloit.eduards.lottery.services.RegistrationService;
 import org.slf4j.Logger;
@@ -20,13 +21,13 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping (value = "/register")
-    public Registration newRegistration(@RequestBody Registration registration) {
+    public NewRegistrationDTO newRegistration(@RequestBody Registration registration) {
         LOGGER.info("Registration has been made");
         return registrationService.register(registration);
     }
 
     @GetMapping (value = "/status")
-    public RegistrationStatus getStatus (@RequestBody Registration registration) {
+    public RegistrationStatusDTO getStatus (@RequestBody Registration registration) {
         LOGGER.info("Status requested");
         return registrationService.getStatus(registration);
     }

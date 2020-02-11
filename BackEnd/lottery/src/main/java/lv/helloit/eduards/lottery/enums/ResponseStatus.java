@@ -1,4 +1,4 @@
-package lv.helloit.eduards.lottery.Other;
+package lv.helloit.eduards.lottery.enums;
 
 public enum ResponseStatus {
     OK,

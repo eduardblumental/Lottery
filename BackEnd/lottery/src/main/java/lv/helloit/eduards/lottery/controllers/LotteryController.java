@@ -1,5 +1,7 @@
 package lv.helloit.eduards.lottery.controllers;
 
+import lv.helloit.eduards.lottery.DTOs.ChooseWinnerDTO;
+import lv.helloit.eduards.lottery.DTOs.LotteryActionDTO;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.services.LotteryService;
 import org.slf4j.Logger;
@@ -21,19 +23,19 @@ public class LotteryController {
     private LotteryService lotteryService;
 
     @PostMapping(value = "/start-registration")
-    public Lottery startRegistration (@RequestBody Lottery lottery) {
+    public LotteryActionDTO startRegistration (@RequestBody Lottery lottery) {
         LOGGER.info("Registration started");
         return lotteryService.createNewLottery(lottery);
     }
 
     @PostMapping(value = "/stop-registration")
-    public Lottery stopRegistration (@RequestBody Lottery lottery) {
+    public LotteryActionDTO stopRegistration (@RequestBody Lottery lottery) {
         LOGGER.info("Registration closed");
         return lotteryService.endRegistration(lottery);
     }
 
     @PostMapping(value = "/choose-winner")
-    public Lottery chooseWinner (@RequestBody Lottery lottery) {
+    public ChooseWinnerDTO chooseWinner (@RequestBody Lottery lottery) {
         LOGGER.info("Winner chosen");
         return lotteryService.chooseWinner(lottery);
     }

@@ -5,12 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lv.helloit.eduards.lottery.Other.LotteryStatus;
+import lv.helloit.eduards.lottery.enums.LotteryStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor

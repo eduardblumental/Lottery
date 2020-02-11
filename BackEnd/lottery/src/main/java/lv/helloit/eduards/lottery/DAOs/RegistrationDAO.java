@@ -1,4 +1,4 @@
-package lv.helloit.eduards.lottery.Other;
+package lv.helloit.eduards.lottery.DAOs;
 
 import lv.helloit.eduards.lottery.mainObjects.Registration;
 import org.springframework.data.repository.CrudRepository;
