@@ -41,7 +41,6 @@ public class RegistrationService {
         Long lotteryId = registration.getLotteryId();
         Optional<Lottery> optionalLottery = lotteryDAO.findById(lotteryId);
         Lottery lottery = optionalLottery.get();
-        LOGGER.info(lottery.getWinner() + " " + registration.getCode());
 
         RegistrationStatusDTO registrationStatusDTO = new RegistrationStatusDTO();
 

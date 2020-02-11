@@ -22,13 +22,12 @@ public class Admin {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     @NotEmpty
-    @Size(min = 8)
+    @Column
     private String login;
 
     @NotEmpty
-    @Column
     @Size(min = 8)
+    @Column
     private String password;
 }
