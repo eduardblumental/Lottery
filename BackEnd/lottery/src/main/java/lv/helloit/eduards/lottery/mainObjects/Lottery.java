@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lv.helloit.eduards.lottery.enums.LotteryStatus;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -23,6 +23,7 @@ public class Lottery {
     private Long id;
 
     @NotNull
+    @Size(min = 4)
     @Column(unique=true)
     private String title;
 
@@ -36,6 +37,8 @@ public class Lottery {
     private LotteryStatus status;
 
     @NotNull
+    @DecimalMin(value = "2", inclusive = true)
+    @Digits(integer = 4, fraction = 0)
     @Column(name = "\"limit\"")
     private Long limit;
 
