@@ -9,7 +9,10 @@ import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.mainObjects.Registration;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -55,9 +58,9 @@ public class RegistrationValidator {
         }
     }
     
-    public void controlAge(Long age){
-        Long legalAge = 21l;
-        Long ageWhenPeopleDie = 150l;
+    public void controlAge(Integer age){
+        Integer legalAge = 21;
+        Integer ageWhenPeopleDie = 150;
         if(age < legalAge){
             throw new TooYoungException("You must be 21 years old to participate in the lottery.");
         }
@@ -75,9 +78,27 @@ public class RegistrationValidator {
         Lottery lottery = optionalLottery.get();
         LocalDateTime lotteryStartDate = lottery.getStartDate();
 
-        Integer first2Digits = lotteryStartDate.getDayOfMonth();
-        Integer second2Digits = lotteryStartDate.getDayOfMonth();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+        String first6Digits = lotteryStartDate.format(formatter);
 
+        if (first6Digits.length() == 5){
+            first6Digits = "0" + first6Digits;
+        }
 
+        Integer emailDigits = email.length();
+
+        String digits7and8 = "";
+
+        if (emailDigits<10) {
+            digits7and8 = "0" + emailDigits;
+        } else {
+            digits7and8 = "" + emailDigits;
+        }
+
+        String codePattern = first6Digits + digits7and8;
+
+        if(!code.startsWith(codePattern)) {
+            throw new InvalidCodeException("Your code doesn't match lottery requirements");
+        }
     }
 }

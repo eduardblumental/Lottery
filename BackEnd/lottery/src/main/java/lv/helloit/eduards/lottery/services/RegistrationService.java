@@ -5,6 +5,7 @@ import lv.helloit.eduards.lottery.DTOs.NewRegistrationDTO;
 import lv.helloit.eduards.lottery.DTOs.RegistrationStatusDTO;
 import lv.helloit.eduards.lottery.DAOs.LotteryDAO;
 import lv.helloit.eduards.lottery.DAOs.RegistrationDAO;
+import lv.helloit.eduards.lottery.Validators.LotteryValidator;
 import lv.helloit.eduards.lottery.Validators.RegistrationValidator;
 import lv.helloit.eduards.lottery.enums.LotteryStatus;
 import lv.helloit.eduards.lottery.enums.RegistrationStatus;
@@ -25,15 +26,20 @@ public class RegistrationService {
     private final LotteryDAO lotteryDAO;
     private final RegistrationDAO registrationDAO;
     private final RegistrationValidator registrationValidator;
+    private final LotteryValidator lotteryValidator;
 
-    public RegistrationService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO, RegistrationValidator registrationValidator) {
+    public RegistrationService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO, RegistrationValidator registrationValidator, LotteryValidator lotteryValidator) {
         this.lotteryDAO = lotteryDAO;
         this.registrationDAO = registrationDAO;
         this.registrationValidator = registrationValidator;
+        this.lotteryValidator = lotteryValidator;
     }
 
     public NewRegistrationDTO register(Registration registration) {
-
+        lotteryValidator.checkIfExists(registration.getLotteryId());
+        registrationValidator.controlRegistration(registration.getLotteryId());
+        registrationValidator.controlAge(registration.getAge());
+        registrationValidator.validateCode(registration);
 
         registrationDAO.save(registration);
 

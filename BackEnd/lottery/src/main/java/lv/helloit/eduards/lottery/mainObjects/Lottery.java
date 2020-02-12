@@ -9,6 +9,7 @@ import lv.helloit.eduards.lottery.enums.LotteryStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
