@@ -25,9 +25,7 @@ public class LotteryValidator {
 
 
     public LotteryStatus checkLotteryStatus(Long id) {
-        if (!lotteryDAO.existsById(id)) {
-            throw new LotteryDoesntExistException("Lottery with id: " + id + " does not exist");
-        }
+        checkIfExists(id);
 
         Optional<Lottery> optionalLottery = lotteryDAO.findById(id);
         Lottery lottery = optionalLottery.get();
@@ -41,13 +39,13 @@ public class LotteryValidator {
 
     public void checkIfExists (Long id) {
         if (!lotteryDAO.existsById(id)) {
-            throw new LotteryDoesntExistException("Lottery with id: " + id + " does not exist");
+            throw new LotteryDoesntExistException("Lottery with id: " + id + " does not exist.");
         }
     }
 
     public void validateCreateNewLottery(Lottery lottery) {
         if (lotteryDAO.existsByTitle(lottery.getTitle())) {
-            throw new LotteryAlreadyExistsException("Lottery with this name already exists");
+            throw new LotteryAlreadyExistsException("Lottery with this name already exists.");
         }
     }
 

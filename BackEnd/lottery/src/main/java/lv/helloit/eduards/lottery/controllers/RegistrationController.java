@@ -1,5 +1,6 @@
 package lv.helloit.eduards.lottery.controllers;
 
+import lv.helloit.eduards.lottery.DTOs.GetStatusDTO;
 import lv.helloit.eduards.lottery.DTOs.NewRegistrationDTO;
 import lv.helloit.eduards.lottery.DTOs.RegistrationStatusDTO;
 import lv.helloit.eduards.lottery.exceptions.WrongInputException;
@@ -34,9 +35,12 @@ public class RegistrationController {
     }
 
     @GetMapping (value = "/status")
-    public RegistrationStatusDTO getStatus (@RequestBody @Valid Registration registration, BindingResult bindingResult) {
-        LOGGER.info("Code " + registration.getCode() + " requested status (lottery id: " + registration.getLotteryId() + ")");
-        return registrationService.getStatus(registration);
+    public RegistrationStatusDTO getStatus (@RequestBody @Valid GetStatusDTO getStatusDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new WrongInputException("Wrong Input. Please enter a lottery id, your email and a 16-digit code.");
+        }
+        LOGGER.info("Code " + getStatusDTO.getCode() + " requested status (lottery id: " + getStatusDTO.getLotteryId() + ")");
+        return registrationService.getStatus(getStatusDTO);
     }
 
 }

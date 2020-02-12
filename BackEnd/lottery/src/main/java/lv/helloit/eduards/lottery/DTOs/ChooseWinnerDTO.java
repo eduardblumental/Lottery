@@ -10,5 +10,5 @@ import lv.helloit.eduards.lottery.enums.ResponseStatus;
 @NoArgsConstructor
 public class ChooseWinnerDTO {
     private ResponseStatus status;
-    private Long winnerCode;
+    private String winnerCode;
 }

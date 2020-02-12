@@ -43,7 +43,7 @@ public class Lottery {
     private Long limit;
 
     @Column
-    private Long winner;
+    private String winner;
 
 }
 

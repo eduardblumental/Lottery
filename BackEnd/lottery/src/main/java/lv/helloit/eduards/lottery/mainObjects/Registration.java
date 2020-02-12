@@ -38,8 +38,8 @@ public class Registration {
     private Integer age;
 
     @NotNull
-    @Digits(integer = 16, fraction = 0)
+    @Size(min = 16, max = 16)
     @Column(unique = true)
-    private Long code;
+    private String code;
 
 }

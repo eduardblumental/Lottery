@@ -70,4 +70,27 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RegistrationDoesntExistException.class)
+    public ResponseEntity<ApplicationError> handleRegistrationDoesntExistException(RegistrationDoesntExistException exception, WebRequest webRequest) {
+        ApplicationError error = new ApplicationError();
+        error.setStatus(ResponseStatus.FAIL);
+        error.setReason(exception.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(LimitHasBeenReachedException.class)
+    public ResponseEntity<ApplicationError> handleLimitHasBeenReachedException(LimitHasBeenReachedException exception, WebRequest webRequest) {
+        ApplicationError error = new ApplicationError();
+        error.setStatus(ResponseStatus.FAIL);
+        error.setReason(exception.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RegistrationIsStoppedException.class)
+    public ResponseEntity<ApplicationError> handleRegistrationIsStoppedException(RegistrationIsStoppedException exception, WebRequest webRequest) {
+        ApplicationError error = new ApplicationError();
+        error.setStatus(ResponseStatus.FAIL);
+        error.setReason(exception.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
