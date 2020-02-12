@@ -30,7 +30,7 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             throw new WrongInputException("Wrong Input. Please enter a lottery id, a valid email, your age and a 16-digit code.");
         }
-        LOGGER.info("Code " + registration.getCode() + " registered (lottery id: " + registration.getLotteryId() + ")");
+
         return registrationService.register(registration);
     }
 
@@ -39,7 +39,7 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             throw new WrongInputException("Wrong Input. Please enter a lottery id, your email and a 16-digit code.");
         }
-        LOGGER.info("Code " + getStatusDTO.getCode() + " requested status (lottery id: " + getStatusDTO.getLotteryId() + ")");
+
         return registrationService.getStatus(getStatusDTO);
     }
 

@@ -31,7 +31,7 @@ public class LotteryController {
         if (bindingResult.hasErrors()) {
             throw new WrongInputException("Wrong input. Lottery name has to be at least 4 characters long and limit has to be between 2 and 9999.");
         }
-        LOGGER.info("Registration for " + lottery.getTitle() +" has started");
+
         return lotteryService.createNewLottery(lottery);
     }
 
@@ -39,7 +39,6 @@ public class LotteryController {
     public LotteryActionDTO stopRegistration (@RequestBody PassLotteryIdDTO idHolder) {
         Long id = idHolder.getId();
 
-        LOGGER.info("Registration stopped (lottery id: " + id + ")");
         return lotteryService.stopRegistration(idHolder);
     }
 
@@ -47,13 +46,12 @@ public class LotteryController {
     public ChooseWinnerDTO chooseWinner (@RequestBody PassLotteryIdDTO idHolder) {
         Long id = idHolder.getId();
 
-        LOGGER.info("Winner chosen (lottery id: " + id + ")");
         return lotteryService.chooseWinner(idHolder);
     }
 
     @GetMapping(value = "/stats")
     public List<Lottery> showStatistics () {
-        LOGGER.info("Statistics requested");
+
         return lotteryService.stats();
     }
 

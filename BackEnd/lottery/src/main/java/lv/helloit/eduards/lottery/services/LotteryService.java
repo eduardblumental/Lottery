@@ -46,6 +46,8 @@ public class LotteryService {
         lotteryActionDTO.setId(lottery.getId());
         lotteryActionDTO.setStatus(ResponseStatus.OK);
 
+        LOGGER.info("Registration for " + lottery.getTitle() +" has started");
+
         return lotteryActionDTO;
     }
 
@@ -62,6 +64,8 @@ public class LotteryService {
         LotteryActionDTO lotteryActionDTO = new LotteryActionDTO();
         lotteryActionDTO.setId(lottery.getId());
         lotteryActionDTO.setStatus(ResponseStatus.OK);
+
+        LOGGER.info("Registration stopped (lottery id: " + idHolder.getId() + ")");
 
         return lotteryActionDTO;
     }
@@ -94,6 +98,8 @@ public class LotteryService {
         ChooseWinnerDTO chooseWinnerDTO = new ChooseWinnerDTO();
         chooseWinnerDTO.setStatus(ResponseStatus.OK);
         chooseWinnerDTO.setWinnerCode(lottery.getWinner());
+
+        LOGGER.info("Winner chosen (lottery id: " + idHolder.getId() + ")");
 
         return chooseWinnerDTO;
     }

@@ -47,6 +47,8 @@ public class RegistrationService {
         newRegistrationDTO.setStatus(ResponseStatus.OK);
         newRegistrationDTO.setMessage("Registration successful. Your code is " + registration.getCode() + ".");
 
+        LOGGER.info("Code " + registration.getCode() + " registered (lottery id: " + registration.getLotteryId() + ")");
+
         return newRegistrationDTO;
     }
 
@@ -58,6 +60,8 @@ public class RegistrationService {
         Lottery lottery = optionalLottery.get();
 
         RegistrationStatusDTO registrationStatusDTO = new RegistrationStatusDTO();
+
+        LOGGER.info("Code " + getStatusDTO.getCode() + " requested status (lottery id: " + lotteryId + ")");
 
         if (lottery.getStatus() != LotteryStatus.WINNER_CHOSEN) {
             registrationStatusDTO.setMessage("Winner for lottery with id:" + lottery.getId() + " hasn't been chosen yet!");
