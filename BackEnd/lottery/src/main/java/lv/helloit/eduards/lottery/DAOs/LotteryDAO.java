@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LotteryDAO extends CrudRepository<Lottery, Long> {
-
+    public boolean existsByTitle(String title);
 }

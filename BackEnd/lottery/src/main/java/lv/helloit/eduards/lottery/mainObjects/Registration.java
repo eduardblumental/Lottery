@@ -32,7 +32,8 @@ public class Registration {
 
     @NotNull
     @Digits(integer = 3, fraction = 0)
-    @DecimalMin(value = "21", inclusive = true)
+    @DecimalMin(value = "1", inclusive = true)
+    @DecimalMax(value = "150", inclusive = true)
     @Column
     private Integer age;
 

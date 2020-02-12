@@ -62,4 +62,12 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(LotteryDoesntExistException.class)
+    public ResponseEntity<ApplicationError> handleLotteryDoesntExistException(LotteryDoesntExistException exception, WebRequest webRequest) {
+        ApplicationError error = new ApplicationError();
+        error.setStatus(ResponseStatus.FAIL);
+        error.setReason(exception.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
 }

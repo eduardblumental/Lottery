@@ -23,6 +23,7 @@ public class Admin {
     private Long id;
 
     @NotEmpty
+    @Size(min = 8)
     @Column
     private String login;
 

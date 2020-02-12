@@ -6,6 +6,7 @@ import lv.helloit.eduards.lottery.DAOs.LotteryDAO;
 import lv.helloit.eduards.lottery.enums.LotteryStatus;
 import lv.helloit.eduards.lottery.DAOs.RegistrationDAO;
 import lv.helloit.eduards.lottery.enums.ResponseStatus;
+import lv.helloit.eduards.lottery.exceptions.LotteryAlreadyExistsException;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.mainObjects.Registration;
 import org.slf4j.Logger;
@@ -25,13 +26,19 @@ public class LotteryService {
 
     private final LotteryDAO lotteryDAO;
     private final RegistrationDAO registrationDAO;
+    private final ValidationService validationService;
 
-    public LotteryService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO) {
+    public LotteryService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO, ValidationService validationService) {
         this.lotteryDAO = lotteryDAO;
         this.registrationDAO = registrationDAO;
+        this.validationService = validationService;
     }
 
     public LotteryActionDTO createNewLottery(Lottery lottery) {
+        if (validationService.checkLotteryName(lottery.getTitle())) {
+            throw new LotteryAlreadyExistsException("Lottery with this name already exists");
+        }
+
         lottery.setStatus(LotteryStatus.REGISTRATION_OPEN);
         lottery.setStartDate(LocalDateTime.now());
         lotteryDAO.save(lottery);
