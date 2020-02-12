@@ -2,7 +2,6 @@ package lv.helloit.eduards.lottery.services;
 
 import lv.helloit.eduards.lottery.DAOs.LotteryDAO;
 import lv.helloit.eduards.lottery.DAOs.RegistrationDAO;
-import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
