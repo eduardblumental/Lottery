@@ -38,7 +38,7 @@ public class LotteryController {
     public LotteryActionDTO stopRegistration (@RequestBody Lottery lottery) {
 
         LOGGER.info("Registration stopped (lottery id: " + lottery.getId() +")");
-        return lotteryService.endRegistration(lottery);
+        return lotteryService.stopRegistration(lottery);
     }
 
     @PostMapping(value = "/choose-winner")
