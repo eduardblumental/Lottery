@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface RegistrationDAO extends CrudRepository<Registration, Long> {
     List<Registration> findAllByLotteryId(Long lotteryId);
+    Long countAllByLotteryId(Long lotteryId);
 }

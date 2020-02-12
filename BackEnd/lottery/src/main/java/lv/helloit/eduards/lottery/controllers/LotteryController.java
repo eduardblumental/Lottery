@@ -2,6 +2,7 @@ package lv.helloit.eduards.lottery.controllers;
 
 import lv.helloit.eduards.lottery.DTOs.ChooseWinnerDTO;
 import lv.helloit.eduards.lottery.DTOs.LotteryActionDTO;
+import lv.helloit.eduards.lottery.DTOs.PassLotteryIdDTO;
 import lv.helloit.eduards.lottery.exceptions.WrongInputException;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.services.LotteryService;
@@ -35,17 +36,19 @@ public class LotteryController {
     }
 
     @PostMapping(value = "/stop-registration")
-    public LotteryActionDTO stopRegistration (@RequestBody Lottery lottery) {
+    public LotteryActionDTO stopRegistration (@RequestBody PassLotteryIdDTO idHolder) {
+        Long id = idHolder.getId();
 
-        LOGGER.info("Registration stopped (lottery id: " + lottery.getId() +")");
-        return lotteryService.stopRegistration(lottery);
+        LOGGER.info("Registration stopped (lottery id: " + id + ")");
+        return lotteryService.stopRegistration(idHolder);
     }
 
     @PostMapping(value = "/choose-winner")
-    public ChooseWinnerDTO chooseWinner (@RequestBody Lottery lottery) {
+    public ChooseWinnerDTO chooseWinner (@RequestBody PassLotteryIdDTO idHolder) {
+        Long id = idHolder.getId();
 
-        LOGGER.info("Winner chosen (lottery id: " + lottery.getId() +")");
-        return lotteryService.chooseWinner(lottery);
+        LOGGER.info("Winner chosen (lottery id: " + id + ")");
+        return lotteryService.chooseWinner(idHolder);
     }
 
     @GetMapping(value = "/stats")

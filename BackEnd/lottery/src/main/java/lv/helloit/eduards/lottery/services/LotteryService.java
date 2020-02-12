@@ -3,11 +3,11 @@ package lv.helloit.eduards.lottery.services;
 import lv.helloit.eduards.lottery.DTOs.ChooseWinnerDTO;
 import lv.helloit.eduards.lottery.DTOs.LotteryActionDTO;
 import lv.helloit.eduards.lottery.DAOs.LotteryDAO;
+import lv.helloit.eduards.lottery.DTOs.PassLotteryIdDTO;
+import lv.helloit.eduards.lottery.Validators.LotteryValidator;
 import lv.helloit.eduards.lottery.enums.LotteryStatus;
 import lv.helloit.eduards.lottery.DAOs.RegistrationDAO;
 import lv.helloit.eduards.lottery.enums.ResponseStatus;
-import lv.helloit.eduards.lottery.exceptions.CantStopRegistrationException;
-import lv.helloit.eduards.lottery.exceptions.LotteryAlreadyExistsException;
 import lv.helloit.eduards.lottery.mainObjects.Lottery;
 import lv.helloit.eduards.lottery.mainObjects.Registration;
 import org.slf4j.Logger;
@@ -27,18 +27,16 @@ public class LotteryService {
 
     private final LotteryDAO lotteryDAO;
     private final RegistrationDAO registrationDAO;
-    private final ValidationService validationService;
+    private final LotteryValidator lotteryValidator;
 
-    public LotteryService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO, ValidationService validationService) {
+    public LotteryService(LotteryDAO lotteryDAO, RegistrationDAO registrationDAO, LotteryValidator lotteryValidator) {
         this.lotteryDAO = lotteryDAO;
         this.registrationDAO = registrationDAO;
-        this.validationService = validationService;
+        this.lotteryValidator = lotteryValidator;
     }
 
     public LotteryActionDTO createNewLottery(Lottery lottery) {
-        if (validationService.checkLotteryName(lottery.getTitle())) {
-            throw new LotteryAlreadyExistsException("Lottery with this name already exists");
-        }
+        lotteryValidator.validateCreateNewLottery(lottery);
 
         lottery.setStatus(LotteryStatus.REGISTRATION_OPEN);
         lottery.setStartDate(LocalDateTime.now());
@@ -51,13 +49,11 @@ public class LotteryService {
         return lotteryActionDTO;
     }
 
-    public LotteryActionDTO stopRegistration(Lottery l) {
-        Optional<Lottery> optionalLottery = lotteryDAO.findById(l.getId());
-        Lottery lottery = optionalLottery.get();
+    public LotteryActionDTO stopRegistration(PassLotteryIdDTO idHolder) {
+        lotteryValidator.validateStopRegistration(idHolder.getId());
 
-        if (validationService.checkLotteryStatus(l.getId()) != LotteryStatus.REGISTRATION_OPEN) {
-            throw new CantStopRegistrationException("Cannot stop registration when lottery status is " + lottery.getStatus());
-        }
+        Optional<Lottery> optionalLottery = lotteryDAO.findById(idHolder.getId());
+        Lottery lottery = optionalLottery.get();
 
         lottery.setEndDate(LocalDateTime.now());
         lottery.setStatus(LotteryStatus.REGISTRATION_CLOSED);
@@ -80,19 +76,16 @@ public class LotteryService {
         return list;
     }
 
-    public ChooseWinnerDTO chooseWinner(Lottery l) {
-        Long lotteryId = l.getId();
-        Optional<Lottery> optionalLottery = lotteryDAO.findById(lotteryId);
-        Lottery lottery = optionalLottery.get();
+    public ChooseWinnerDTO chooseWinner(PassLotteryIdDTO idHolder) {
+        lotteryValidator.validateChooseWinner(idHolder.getId());
 
-        if (validationService.checkLotteryStatus(l.getId()) != LotteryStatus.REGISTRATION_CLOSED) {
-            throw new CantStopRegistrationException("Cannot stop registration when lottery status is " + lottery.getStatus());
-        }
-
-        List<Registration> list = registrationDAO.findAllByLotteryId(lotteryId);
+        List<Registration> list = registrationDAO.findAllByLotteryId(idHolder.getId());
 
         Random random = new Random();
         Registration winner = list.get(random.nextInt(list.size()));
+
+        Optional<Lottery> optionalLottery = lotteryDAO.findById(idHolder.getId());
+        Lottery lottery = optionalLottery.get();
 
         lottery.setWinner(winner.getCode());
         lottery.setStatus(LotteryStatus.WINNER_CHOSEN);
