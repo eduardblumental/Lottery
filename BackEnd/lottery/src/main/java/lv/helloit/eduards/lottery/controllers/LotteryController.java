@@ -23,8 +23,11 @@ public class LotteryController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LotteryController.class);
 
-    @Autowired
-    private LotteryService lotteryService;
+    private final LotteryService lotteryService;
+
+    public LotteryController(LotteryService lotteryService) {
+        this.lotteryService = lotteryService;
+    }
 
     @PostMapping(value = "/start-registration")
     public LotteryActionDTO startRegistration (@RequestBody @Valid Lottery lottery, BindingResult bindingResult) {

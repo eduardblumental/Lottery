@@ -39,7 +39,6 @@ public class Registration {
 
     @NotNull
     @Size(min = 16, max = 16)
-    @Column(unique = true)
     private String code;
 
 }

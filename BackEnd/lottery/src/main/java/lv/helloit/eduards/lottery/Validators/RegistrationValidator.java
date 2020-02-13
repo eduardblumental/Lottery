@@ -74,6 +74,10 @@ public class RegistrationValidator {
         String code = registration.getCode();
         String email = registration.getEmail();
 
+        if (registrationDAO.existsByCode(code)) {
+            throw new InvalidCodeException("Code " + code + " has been already registered");
+        }
+
         Optional<Lottery> optionalLottery = lotteryDAO.findById(lotteryId);
         Lottery lottery = optionalLottery.get();
         LocalDateTime lotteryStartDate = lottery.getStartDate();

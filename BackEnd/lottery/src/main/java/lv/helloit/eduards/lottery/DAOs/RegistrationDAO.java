@@ -12,4 +12,5 @@ public interface RegistrationDAO extends CrudRepository<Registration, Long> {
     List<Registration> findAllByLotteryId(Long lotteryId);
     Long countAllByLotteryId(Long lotteryId);
     Optional<Registration> findByCode(String code);
+    boolean  existsByCode(String code);
 }

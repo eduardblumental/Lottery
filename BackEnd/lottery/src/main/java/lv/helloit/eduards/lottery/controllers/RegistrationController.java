@@ -22,8 +22,11 @@ public class RegistrationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
 
-    @Autowired
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
+
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @PostMapping (value = "/register")
     public NewRegistrationDTO newRegistration(@RequestBody @Valid Registration registration, BindingResult bindingResult) {
