@@ -9,6 +9,7 @@ import lv.helloit.eduards.lottery.services.LotteryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class LotteryController {
         this.lotteryService = lotteryService;
     }
 
-    @PostMapping(value = "/start-registration")
+    @PostMapping(value = "/start-registration", produces = MediaType.APPLICATION_JSON_VALUE)
     public LotteryActionDTO startRegistration (@RequestBody @Valid Lottery lottery, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new WrongInputException("Wrong input. Lottery name has to be at least 4 characters long and limit has to be between 2 and 9999.");
@@ -38,21 +39,21 @@ public class LotteryController {
         return lotteryService.createNewLottery(lottery);
     }
 
-    @PostMapping(value = "/stop-registration")
+    @PostMapping(value = "/stop-registration", produces = MediaType.APPLICATION_JSON_VALUE)
     public LotteryActionDTO stopRegistration (@RequestBody PassLotteryIdDTO idHolder) {
         Long id = idHolder.getId();
 
         return lotteryService.stopRegistration(idHolder);
     }
 
-    @PostMapping(value = "/choose-winner")
+    @PostMapping(value = "/choose-winner", produces = MediaType.APPLICATION_JSON_VALUE)
     public ChooseWinnerDTO chooseWinner (@RequestBody PassLotteryIdDTO idHolder) {
         Long id = idHolder.getId();
 
         return lotteryService.chooseWinner(idHolder);
     }
 
-    @GetMapping(value = "/stats")
+    @GetMapping(value = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Lottery> showStatistics () {
 
         return lotteryService.stats();
